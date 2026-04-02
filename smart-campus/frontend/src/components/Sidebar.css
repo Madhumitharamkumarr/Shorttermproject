@@ -1,0 +1,89 @@
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+    border-right: 1px solid var(--glass-border);
+    border-top: none;
+    border-bottom: none;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    padding: 0 20px;
+    margin-bottom: 8px;
+}
+
+.sidebar-brand h2 {
+    font-size: 17px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Force white text — don't use gradient here */
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: white !important;
+    background-clip: unset !important;
+    padding-bottom: 0;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 12px;
+    margin-top: 12px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 16px;
+    color: var(--text-muted);
+    -webkit-text-fill-color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar-link span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-link svg {
+    flex-shrink: 0;
+    color: var(--text-muted);
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+    -webkit-text-fill-color: var(--text-main);
+    transform: translateX(3px);
+}
+
+.sidebar-link:hover svg { color: var(--text-main); }
+
+.sidebar-link.active {
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.25), rgba(99, 102, 241, 0.05));
+    color: #a5b4fc;
+    -webkit-text-fill-color: #a5b4fc;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 13px;
+}
+
+.sidebar-link.active svg { color: #a5b4fc; }

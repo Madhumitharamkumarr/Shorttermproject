@@ -1,0 +1,175 @@
+/* ===== PROFILE PAGE ===== */
+
+/* --- Print Styles --- */
+@media print {
+  body { background: white; color: black; }
+  .no-print, .sidebar, .navbar { display: none !important; }
+  .main-content { margin-left: 0 !important; }
+  .glass-panel {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+  }
+  h2, h3, p, label {
+    color: black !important;
+    background: none !important;
+    -webkit-text-fill-color: black !important;
+  }
+  .status-badge { border: 1px solid #666; color: black !important; -webkit-text-fill-color: black !important; }
+}
+
+/* --- Profile layout --- */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-card {
+  padding: 28px;
+}
+
+/* --- Avatar --- */
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
+  -webkit-text-fill-color: white;
+  flex-shrink: 0;
+}
+
+/* --- Header row inside profile card --- */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.profile-header h3 {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.profile-header p {
+  font-size: 13px;
+  color: var(--text-muted);
+  -webkit-text-fill-color: var(--text-muted);
+  margin: 0;
+}
+
+/* --- Info grid --- */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 640px) {
+  .profile-grid { grid-template-columns: 1fr; }
+}
+
+/* --- Info group (label + value) --- */
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.info-group label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  -webkit-text-fill-color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+}
+
+.info-group p {
+  font-size: 15px;
+  color: var(--text-main);
+  -webkit-text-fill-color: var(--text-main);
+  margin: 0;
+  word-break: break-all;
+}
+
+/* --- Skills tag list --- */
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #a5b4fc;
+  -webkit-text-fill-color: #a5b4fc;
+}
+
+/* --- Links row --- */
+.profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.profile-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  transition: background 0.2s;
+  -webkit-text-fill-color: inherit;
+}
+.profile-links a:hover { background: rgba(255, 255, 255, 0.1); }
+.profile-links a.text-primary { color: #818cf8; -webkit-text-fill-color: #818cf8; }
+.profile-links a.text-info    { color: #38bdf8; -webkit-text-fill-color: #38bdf8; }
+.profile-links a.text-warning { color: #fbbf24; -webkit-text-fill-color: #fbbf24; }
+
+/* --- Edit links inputs --- */
+.profile-links-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* --- Save button row --- */
+.save-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+/* --- Section divider --- */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--glass-border);
+  margin: 20px 0;
+}
