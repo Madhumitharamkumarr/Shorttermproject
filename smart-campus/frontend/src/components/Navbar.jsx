@@ -9,7 +9,7 @@ const Navbar = () => {
     return (
         <header className="navbar glass-panel">
             <div className="navbar-left">
-                <h3>Welcome back, {user?.role === 'admin' ? 'Admin' : 'Student'}!</h3>
+                <h3>Welcome, {user?.name || user?.email?.split('@')[0] || 'User'}!</h3>
             </div>
             <div className="navbar-right">
                 <div className="user-profile">

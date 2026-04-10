@@ -45,7 +45,7 @@ const StudentDashboard = () => {
 
             {/* Header */}
             <div>
-                <h2 style={{ marginBottom: 4 }}>Welcome back, {user?.name || 'Student'}! 👋</h2>
+                <h2 style={{ marginBottom: 4 }}>Student Dashboard</h2>
                 <p style={{ margin: 0, fontSize: 13 }}>Track your placement journey and upcoming opportunities.</p>
             </div>
 
