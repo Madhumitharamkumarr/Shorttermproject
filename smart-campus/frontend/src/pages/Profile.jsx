@@ -46,9 +46,15 @@ const Profile = () => {
 
     if (user?.role === 'admin') {
         return (
-            <div className="glass-panel p-4" style={{ maxWidth: 480 }}>
-                <h2 style={{ marginBottom: 8 }}>Admin Profile</h2>
-                <p style={{ margin: 0 }}>{profile.email}</p>
+            <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: 28, maxWidth: 480, boxShadow: '0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(37,99,235,0.06)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                    <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg,#2563EB,#60A5FA)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, fontWeight: 800, color: 'white' }}>A</div>
+                    <div>
+                        <h2 style={{ marginBottom: 4, fontSize: '1.2rem', color: '#0F172A' }}>Administrator</h2>
+                        <p style={{ margin: 0, color: '#64748B', fontSize: 14 }}>{profile.email}</p>
+                    </div>
+                </div>
+                <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: 10, padding: '10px 16px', fontSize: 13, color: '#1D4ED8', fontWeight: 600 }}>🛡️ Full administrative access</div>
             </div>
         );
     }
@@ -60,8 +66,8 @@ const Profile = () => {
             {/* Header row */}
             <div className="flex-between no-print">
                 <div>
-                    <h2 style={{ marginBottom: 4 }}>My Profile</h2>
-                    <p style={{ margin: 0, fontSize: 13 }}>View and update your placement profile</p>
+                    <h2 style={{ marginBottom: 4, color: '#0F172A', fontWeight: 800, fontSize: '1.5rem' }}>My Profile</h2>
+                    <p style={{ margin: 0, fontSize: 14, color: '#64748B' }}>View and update your placement profile</p>
                 </div>
                 <div className="flex gap-3">
                     {isEditing ? (

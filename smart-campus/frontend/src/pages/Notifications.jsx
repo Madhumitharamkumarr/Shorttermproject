@@ -3,6 +3,12 @@ import { DataContext } from '../context/DataContext';
 import { AuthContext } from '../context/AuthContext';
 import { Bell, Check, X, Plus } from 'lucide-react';
 
+const typeStyle = (type) => {
+    if (type === 'Urgent')          return { bg: '#FEF2F2', color: '#B91C1C', border: '#FECACA' };
+    if (type === 'Action Required') return { bg: '#FFFBEB', color: '#B45309', border: '#FDE68A' };
+    return                                 { bg: '#EFF6FF', color: '#1D4ED8', border: '#BFDBFE' };
+};
+
 const Notifications = () => {
     const { notifications, setNotifications, pushNotification } = useContext(DataContext);
     const { user } = useContext(AuthContext);
@@ -11,16 +17,9 @@ const Notifications = () => {
     const [newNotif, setNewNotif] = useState({ title: '', description: '', type: 'Info' });
     const [reasons, setReasons] = useState({});
 
-    // Filter and sort: newest first, and only what applies to the current user
     const filteredNotifications = notifications
         .filter(n => n.recipientId === null || n.recipientId === user?._id)
         .sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    const typeStyle = (type) => {
-        if (type === 'Urgent')          return { bg: 'rgba(239,68,68,0.15)',  color: '#f87171' };
-        if (type === 'Action Required') return { bg: 'rgba(245,158,11,0.15)', color: '#fbbf24' };
-        return                                 { bg: 'rgba(14,165,233,0.15)',  color: '#38bdf8' };
-    };
 
     const handleRespond = (notifId, interested) => {
         if (!interested && !reasons[notifId]) {
@@ -51,8 +50,8 @@ const Notifications = () => {
             {/* Page Header */}
             <div className="flex-between">
                 <div>
-                    <h2 style={{ marginBottom: 4 }}>Notifications &amp; Announcements</h2>
-                    <p style={{ margin: 0, fontSize: 13 }}>Stay updated with the latest campus placement news.</p>
+                    <h2 style={{ marginBottom: 4, color: '#0F172A', fontWeight: 800 }}>Notifications &amp; Announcements</h2>
+                    <p style={{ margin: 0, fontSize: 14, color: '#64748B' }}>Stay updated with the latest campus placement news.</p>
                 </div>
                 {user?.role === 'admin' && (
                     <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
@@ -64,7 +63,10 @@ const Notifications = () => {
             {/* Admin: Add Notification Form */}
             {showForm && (
                 <form className="glass-panel p-4" onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                    <h3 style={{ marginBottom: 4 }}>Push New Notification (Global)</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                        <Bell size={16} style={{ color: '#2563EB' }} />
+                        <h3 style={{ margin: 0, fontSize: 15, color: '#0F172A' }}>Push New Notification (Global)</h3>
+                    </div>
                     <input
                         className="form-input"
                         placeholder="Title (e.g. Infosys is coming)"
@@ -98,8 +100,9 @@ const Notifications = () => {
 
             {/* Notification list */}
             {filteredNotifications.length === 0 ? (
-                <div className="glass-panel p-4" style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
-                    No notifications yet.
+                <div className="glass-panel p-4" style={{ textAlign: 'center', color: '#64748B', padding: '48px 24px' }}>
+                    <div style={{ fontSize: 40, marginBottom: 12 }}>🔔</div>
+                    <p style={{ margin: 0, color: '#475569', fontWeight: 500 }}>No notifications yet.</p>
                 </div>
             ) : (
                 filteredNotifications.map(notif => {
@@ -108,68 +111,74 @@ const Notifications = () => {
                     const isUnread = user?.role === 'student' && !notif.read && !myResponse;
 
                     return (
-                        <div key={notif.id} className="glass-panel p-4" style={{ 
-                            position: 'relative', 
-                            borderLeft: isUnread ? '4px solid #818cf8' : '1px solid var(--glass-border)',
-                            background: isUnread ? 'rgba(99,102,241,0.05)' : 'none'
+                        <div key={notif.id} style={{
+                            background: '#FFFFFF',
+                            border: `1px solid ${isUnread ? '#2563EB' : '#E2E8F0'}`,
+                            borderLeft: `4px solid ${isUnread ? '#2563EB' : '#E2E8F0'}`,
+                            borderRadius: 14,
+                            padding: '20px 22px',
+                            boxShadow: isUnread ? '0 2px 12px rgba(37,99,235,0.1)' : '0 1px 3px rgba(0,0,0,0.05)',
+                            background: isUnread ? '#F8FBFF' : '#FFFFFF',
+                            transition: 'box-shadow 0.2s',
                         }}>
-                            {/* Top row: icon + title + badge */}
+                            {/* Top row */}
                             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
-                                <Bell size={18} style={{ color: isUnread ? '#818cf8' : '#fbbf24', flexShrink: 0, marginTop: 2 }} />
+                                <div style={{
+                                    width: 38, height: 38, borderRadius: 10, background: ts.bg, border: `1px solid ${ts.border}`,
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+                                }}>
+                                    <Bell size={17} style={{ color: ts.color }} />
+                                </div>
                                 <div style={{ flex: 1, minWidth: 0 }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', justifyContent: 'space-between' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                            <h3 style={{ margin: 0, fontSize: 15 }}>{notif.title}</h3>
+                                            <h3 style={{ margin: 0, fontSize: 15, color: '#0F172A' }}>{notif.title}</h3>
                                             <span style={{
-                                                background: ts.bg, color: ts.color, WebkitTextFillColor: ts.color,
-                                                padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600, flexShrink: 0
+                                                background: ts.bg, color: ts.color, border: `1px solid ${ts.border}`,
+                                                padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700, flexShrink: 0
                                             }}>
                                                 {notif.type}
                                             </span>
-                                            {isUnread && <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#818cf8' }}></span>}
+                                            {isUnread && <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#2563EB', display: 'inline-block' }}></span>}
                                         </div>
-                                        <div style={{ fontSize: 11, color: 'var(--text-muted)', WebkitTextFillColor: 'var(--text-muted)' }}>
+                                        <div style={{ fontSize: 11, color: '#94A3B8' }}>
                                             {new Date(notif.date).toLocaleDateString()} · {new Date(notif.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </div>
                                     </div>
-                                    <p style={{ margin: '6px 0 0', fontSize: 13, lineHeight: 1.5 }}>{notif.description}</p>
+                                    <p style={{ margin: '8px 0 0', fontSize: 14, lineHeight: 1.6, color: '#334155' }}>{notif.description}</p>
                                 </div>
                             </div>
 
                             {/* Student actions section */}
                             {user?.role === 'student' && (
-                                <div style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid #EEF2FF', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     {notif.type === 'Action Required' ? (
                                         myResponse ? (
                                             <div style={{
-                                                display: 'inline-flex',
-                                                alignItems: 'center',
-                                                gap: 8,
-                                                padding: '6px 12px',
-                                                borderRadius: 8,
-                                                background: myResponse.interested ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.12)',
-                                                color: myResponse.interested ? '#34d399' : '#f87171',
-                                                WebkitTextFillColor: myResponse.interested ? '#34d399' : '#f87171',
-                                                fontSize: 12,
-                                                fontWeight: 600,
+                                                display: 'inline-flex', alignItems: 'center', gap: 8,
+                                                padding: '7px 14px', borderRadius: 8,
+                                                background: myResponse.interested ? '#ECFDF5' : '#FEF2F2',
+                                                color: myResponse.interested ? '#065F46' : '#B91C1C',
+                                                border: `1px solid ${myResponse.interested ? '#A7F3D0' : '#FECACA'}`,
+                                                fontSize: 13, fontWeight: 600,
                                             }}>
                                                 {myResponse.interested ? <Check size={14}/> : <X size={14}/>}
                                                 Responded: {myResponse.interested ? 'Interested' : 'Not Interested'}
                                             </div>
                                         ) : (
-                                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 400, flex: 1 }}>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 420, flex: 1 }}>
                                                 <div style={{ display: 'flex', gap: 10 }}>
-                                                    <button className="btn btn-success" style={{ flex: 1, padding: '6px 14px', fontSize: 12 }} onClick={() => handleRespond(notif.id, true)}>
+                                                    <button className="btn btn-success" style={{ flex: 1, padding: '8px 14px', fontSize: 13 }} onClick={() => handleRespond(notif.id, true)}>
                                                         <Check size={14} /> Interested
                                                     </button>
-                                                    <button className="btn btn-danger" style={{ flex: 1, padding: '6px 14px', fontSize: 12 }} onClick={() => handleRespond(notif.id, false)}>
+                                                    <button className="btn btn-danger" style={{ flex: 1, padding: '8px 14px', fontSize: 13 }} onClick={() => handleRespond(notif.id, false)}>
                                                         <X size={14} /> Not Interested
                                                     </button>
                                                 </div>
                                                 <input
                                                     type="text"
                                                     className="form-input"
-                                                    style={{ height: 32, fontSize: 12 }}
+                                                    style={{ fontSize: 12 }}
                                                     placeholder="Reason (if not interested)"
                                                     value={reasons[notif.id] || ''}
                                                     onChange={e => setReasons({ ...reasons, [notif.id]: e.target.value })}
@@ -179,9 +188,11 @@ const Notifications = () => {
                                     ) : (
                                         <div>
                                             {notif.read ? (
-                                                <span style={{ fontSize: 12, color: 'var(--text-muted)', WebkitTextFillColor: 'var(--text-muted)' }}>Read</span>
+                                                <span style={{ fontSize: 12, color: '#10B981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
+                                                    <Check size={13} /> Read
+                                                </span>
                                             ) : (
-                                                <button className="btn btn-glass" style={{ padding: '4px 10px', fontSize: 11 }} onClick={() => markAsRead(notif.id)}>
+                                                <button className="btn btn-glass" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => markAsRead(notif.id)}>
                                                     Mark as Read
                                                 </button>
                                             )}
@@ -192,15 +203,15 @@ const Notifications = () => {
 
                             {/* Admin: responses count */}
                             {user?.role === 'admin' && notif.type === 'Action Required' && (
-                                <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--glass-border)', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                                    <span style={{ fontSize: 12, color: 'var(--text-muted)', WebkitTextFillColor: 'var(--text-muted)' }}>
-                                        Total responses: <strong style={{ color: 'var(--text-main)', WebkitTextFillColor: 'var(--text-main)' }}>{Object.keys(notif.responses || {}).length}</strong>
+                                <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid #EEF2FF', display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'center' }}>
+                                    <span style={{ fontSize: 13, color: '#64748B' }}>
+                                        Total responses: <strong style={{ color: '#0F172A' }}>{Object.keys(notif.responses || {}).length}</strong>
                                     </span>
-                                    <span style={{ fontSize: 12, color: '#34d399', WebkitTextFillColor: '#34d399' }}>
-                                        Interested: {Object.values(notif.responses || {}).filter(r => r.interested).length}
+                                    <span style={{ fontSize: 13, color: '#059669', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
+                                        <Check size={13} /> Interested: {Object.values(notif.responses || {}).filter(r => r.interested).length}
                                     </span>
-                                    <span style={{ fontSize: 12, color: '#f87171', WebkitTextFillColor: '#f87171' }}>
-                                        Rejected: {Object.values(notif.responses || {}).filter(r => !r.interested).length}
+                                    <span style={{ fontSize: 13, color: '#DC2626', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
+                                        <X size={13} /> Declined: {Object.values(notif.responses || {}).filter(r => !r.interested).length}
                                     </span>
                                 </div>
                             )}

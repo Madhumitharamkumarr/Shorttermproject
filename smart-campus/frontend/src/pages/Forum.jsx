@@ -173,8 +173,8 @@ const Forum = () => {
                                             : post.comments.map((c, i) => (
                                                 <div key={i} style={{
                                                     padding: '10px 14px',
-                                                    background: 'var(--bg-main)',
-                                                    border: '1px solid var(--border)',
+                                                    background: '#F8FAFF',
+                                                    border: '1px solid #EEF2FF',
                                                     borderRadius: 8,
                                                 }}>
                                                     <p style={{ margin: '0 0 4px', fontSize: 14, lineHeight: 1.5, color: 'var(--text-main)' }}>{c.content}</p>

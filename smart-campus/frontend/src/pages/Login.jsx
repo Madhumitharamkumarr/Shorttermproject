@@ -35,23 +35,15 @@ const Login = () => {
 
                 <hr className="auth-divider" />
 
-                {/* Student login hint */}
-                <div style={{
-                    background: 'rgba(99,102,241,0.1)',
-                    border: '1px solid rgba(99,102,241,0.3)',
-                    borderRadius: 10,
-                    padding: '10px 14px',
-                    marginBottom: 16,
-                    fontSize: 13,
-                    color: '#a5b4fc',
-                    lineHeight: 1.5
-                }}>
-                    🎓 <strong>Students:</strong> Use your college email and <strong>Roll Number</strong> as password<br/>
-                  
+                <div className="auth-hint">
+                    <span>ℹ️</span>
+                    <span>
+                        <strong>Students:</strong> Use your college email and <strong>Roll Number</strong> as password.<br />
+                        <strong>Admin:</strong> admin@prepnplace.com / admin123
+                    </span>
                 </div>
 
-                {error && <div className="auth-error">{error}</div>}
-
+                {error && <div className="auth-error">⚠️ {error}</div>}
 
                 <form onSubmit={handleLogin}>
                     <div className="form-group">
@@ -78,7 +70,7 @@ const Login = () => {
                     </div>
 
                     <button type="submit" className="auth-btn" disabled={loading}>
-                        {loading ? 'Signing in…' : 'Sign In'}
+                        {loading ? '⏳ Signing in…' : '→ Sign In'}
                     </button>
                 </form>
 

@@ -105,10 +105,10 @@ const CodingEditor = ({ problem, onComplete }) => {
                 {/* Problem panel */}
                 {problem && (
                     <div className="glass-panel p-4" style={{ maxHeight: 520, overflowY: 'auto' }}>
-                        <div style={{ fontSize: 11, fontWeight: 600, color: '#818cf8', WebkitTextFillColor: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: '#2563EB', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>
                             Problem Statement
                         </div>
-                        <p style={{ fontSize: 14, lineHeight: 1.7, whiteSpace: 'pre-wrap', color: 'var(--text-main)', WebkitTextFillColor: 'var(--text-main)' }}>
+                        <p style={{ fontSize: 14, lineHeight: 1.7, whiteSpace: 'pre-wrap', color: '#0F172A' }}>
                             {problem.problemStatement || problem.question}
                         </p>
                     </div>
@@ -116,13 +116,13 @@ const CodingEditor = ({ problem, onComplete }) => {
 
                 {/* Editor + output */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                    <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
+                    <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
                         <Editor
                             height="340px"
                             language={lang.monaco}
                             value={code}
                             onChange={val => setCode(val || '')}
-                            theme="vs-dark"
+                            theme="light"
                             options={{
                                 fontSize: 14,
                                 minimap: { enabled: false },
@@ -137,27 +137,26 @@ const CodingEditor = ({ problem, onComplete }) => {
 
                     {/* stdin */}
                     <div>
-                        <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', WebkitTextFillColor: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 6 }}>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 6 }}>
                             Standard Input (stdin)
                         </div>
-                        <textarea className="form-input" rows={2} style={{ resize: 'none', fontFamily: 'monospace', fontSize: 13 }}
+                        <textarea className="form-input" rows={2} style={{ resize: 'none', fontFamily: 'monospace', fontSize: 13, background: '#FFFFFF' }}
                             placeholder="Enter test input here…" value={stdin} onChange={e => setStdin(e.target.value)} />
                     </div>
 
                     {/* Output */}
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
-                            <Terminal size={13} style={{ color: '#818cf8' }}/>
-                            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', WebkitTextFillColor: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                            <Terminal size={14} style={{ color: '#2563EB' }}/>
+                            <span style={{ fontSize: 11, fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                 Output
                             </span>
                         </div>
                         <div style={{
-                            background: 'rgba(0,0,0,0.4)', borderRadius: 8, border: '1px solid var(--glass-border)',
-                            padding: '12px 14px', minHeight: 80, maxHeight: 200, overflowY: 'auto',
-                            fontFamily: 'monospace', fontSize: 13, whiteSpace: 'pre-wrap',
-                            color: runError ? '#f87171' : '#a3e635',
-                            WebkitTextFillColor: runError ? '#f87171' : '#a3e635',
+                            background: '#0F172A', borderRadius: 8, border: '1px solid #E2E8F0', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)',
+                            padding: '14px 16px', minHeight: 100, maxHeight: 200, overflowY: 'auto',
+                            fontFamily: '"Fira Code", monospace', fontSize: 13, whiteSpace: 'pre-wrap',
+                            color: runError ? '#EF4444' : '#10B981',
                         }}>
                             {running ? '⏳ Executing…' : (output || '// Click Run Code to see output')}
                         </div>

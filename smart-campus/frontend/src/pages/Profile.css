@@ -1,4 +1,4 @@
-/* ===== PROFILE PAGE ===== */
+/* ===== PROFILE PAGE — Blue Light Theme ===== */
 
 /* --- Print Styles --- */
 @media print {
@@ -10,12 +10,8 @@
     border: 1px solid #ccc !important;
     box-shadow: none !important;
   }
-  h2, h3, p, label {
-    color: black !important;
-    background: none !important;
-    -webkit-text-fill-color: black !important;
-  }
-  .status-badge { border: 1px solid #666; color: black !important; -webkit-text-fill-color: black !important; }
+  h2, h3, p, label { color: black !important; }
+  .status-badge { border: 1px solid #666; color: black !important; }
 }
 
 /* --- Profile layout --- */
@@ -27,23 +23,27 @@
 
 .profile-card {
   padding: 28px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(37,99,235,0.06);
 }
 
 /* --- Avatar --- */
 .profile-avatar {
-  width: 64px;
-  height: 64px;
-  min-width: 64px;
+  width: 68px;
+  height: 68px;
+  min-width: 68px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(135deg, #2563EB, #60A5FA);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 800;
   color: white;
-  -webkit-text-fill-color: white;
   flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
 }
 
 /* --- Header row inside profile card --- */
@@ -55,14 +55,14 @@
 }
 
 .profile-header h3 {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   margin-bottom: 4px;
+  color: #0F172A;
 }
 
 .profile-header p {
   font-size: 13px;
-  color: var(--text-muted);
-  -webkit-text-fill-color: var(--text-muted);
+  color: #64748B;
   margin: 0;
 }
 
@@ -87,18 +87,16 @@
 
 .info-group label {
   font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  -webkit-text-fill-color: var(--text-muted);
+  font-weight: 700;
+  color: #2563EB;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.7px;
   display: block;
 }
 
 .info-group p {
   font-size: 15px;
-  color: var(--text-main);
-  -webkit-text-fill-color: var(--text-main);
+  color: #1E293B;
   margin: 0;
   word-break: break-all;
 }
@@ -114,21 +112,26 @@
 .skill-tag {
   display: inline-flex;
   align-items: center;
-  padding: 4px 12px;
-  background: rgba(99, 102, 241, 0.15);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 5px 14px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 500;
-  color: #a5b4fc;
-  -webkit-text-fill-color: #a5b4fc;
+  font-weight: 600;
+  color: #1D4ED8;
+  transition: all 0.2s;
+}
+
+.skill-tag:hover {
+  background: #DBEAFE;
+  border-color: #93C5FD;
 }
 
 /* --- Links row --- */
 .profile-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
   margin-top: 8px;
   align-items: center;
 }
@@ -136,21 +139,25 @@
 .profile-links a {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--glass-border);
-  transition: background 0.2s;
-  -webkit-text-fill-color: inherit;
+  background: #F8FAFF;
+  border: 1.5px solid #E2E8F0;
+  color: #334155;
+  transition: all 0.2s;
 }
-.profile-links a:hover { background: rgba(255, 255, 255, 0.1); }
-.profile-links a.text-primary { color: #818cf8; -webkit-text-fill-color: #818cf8; }
-.profile-links a.text-info    { color: #38bdf8; -webkit-text-fill-color: #38bdf8; }
-.profile-links a.text-warning { color: #fbbf24; -webkit-text-fill-color: #fbbf24; }
+.profile-links a:hover {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #2563EB;
+}
+.profile-links a.text-primary { color: #2563EB; border-color: #BFDBFE; background: #EFF6FF; }
+.profile-links a.text-info    { color: #0284C7; border-color: #BAE6FD; background: #F0F9FF; }
+.profile-links a.text-warning { color: #B45309; border-color: #FDE68A; background: #FFFBEB; }
 
 /* --- Edit links inputs --- */
 .profile-links-edit {
@@ -170,6 +177,28 @@
 /* --- Section divider --- */
 .section-divider {
   border: none;
-  border-top: 1px solid var(--glass-border);
+  border-top: 1px solid #EEF2FF;
   margin: 20px 0;
+}
+
+/* --- PDF Download btn --- */
+.btn-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #2563EB, #3B82F6);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+.btn-pdf:hover {
+  background: linear-gradient(135deg, #1D4ED8, #2563EB);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
 }

@@ -5,15 +5,15 @@ import { Target, CheckCircle, Activity, Briefcase, BookOpen, Code2 } from 'lucid
 import './Dashboard.css';
 
 const statusColor = (status) => {
-    if (status === 'Selected' || status === 'Cleared') return { bg: 'rgba(16,185,129,0.15)', color: '#34d399' };
-    if (status === 'Rejected') return { bg: 'rgba(239,68,68,0.15)', color: '#f87171' };
-    return { bg: 'rgba(245,158,11,0.15)', color: '#fbbf24' };
+    if (status === 'Selected' || status === 'Cleared') return { bg: '#ECFDF5', color: '#065F46', border: '#A7F3D0' };
+    if (status === 'Rejected') return { bg: '#FEF2F2', color: '#B91C1C', border: '#FECACA' };
+    return { bg: '#FFFBEB', color: '#B45309', border: '#FDE68A' };
 };
 
 const scoreColor = (pct) => {
-    if (pct >= 80) return { bg: 'rgba(16,185,129,0.15)', color: '#34d399' };
-    if (pct >= 60) return { bg: 'rgba(245,158,11,0.15)', color: '#fbbf24' };
-    return { bg: 'rgba(239,68,68,0.15)', color: '#f87171' };
+    if (pct >= 80) return { bg: '#ECFDF5', color: '#065F46', border: '#A7F3D0' };
+    if (pct >= 60) return { bg: '#FFFBEB', color: '#B45309', border: '#FDE68A' };
+    return { bg: '#FEF2F2', color: '#B91C1C', border: '#FECACA' };
 };
 
 const StudentDashboard = () => {
@@ -23,13 +23,12 @@ const StudentDashboard = () => {
     const myResults = (testResults || []).filter(r => r.studentId === user?._id);
 
     const stats = [
-        { icon: <Target size={20} />, value: myApps.length, label: 'Applications', color: '#6366f1', bg: 'rgba(99,102,241,0.15)' },
-        { icon: <CheckCircle size={20} />, value: myApps.filter(a => a.finalStatus === 'Selected').length, label: 'Offers Received', color: '#10b981', bg: 'rgba(16,185,129,0.15)' },
-        { icon: <Activity size={20} />, value: myApps.filter(a => ['In Progress', 'Applied'].includes(a.finalStatus)).length, label: 'In Progress', color: '#f59e0b', bg: 'rgba(245,158,11,0.15)' },
-        { icon: <Briefcase size={20} />, value: companies.length, label: 'Active Drives', color: '#0ea5e9', bg: 'rgba(14,165,233,0.15)' },
+        { icon: <Target size={22} />, value: myApps.length, label: 'Applications', color: '#2563EB', bg: '#EFF6FF' },
+        { icon: <CheckCircle size={22} />, value: myApps.filter(a => a.finalStatus === 'Selected').length, label: 'Offers Received', color: '#10B981', bg: '#ECFDF5' },
+        { icon: <Activity size={22} />, value: myApps.filter(a => ['In Progress', 'Applied'].includes(a.finalStatus)).length, label: 'In Progress', color: '#F59E0B', bg: '#FFFBEB' },
+        { icon: <Briefcase size={22} />, value: companies.length, label: 'Active Drives', color: '#0EA5E9', bg: '#F0F9FF' },
     ];
 
-    // Accomplishment badges
     const badges = [];
     const firstTest  = myResults[0];
     const topScore   = myResults.find(r => r.pct === 100);
@@ -45,17 +44,17 @@ const StudentDashboard = () => {
 
             {/* Header */}
             <div>
-                <h2 style={{ marginBottom: 4 }}>Student Dashboard</h2>
-                <p style={{ margin: 0, fontSize: 13 }}>Track your placement journey and upcoming opportunities.</p>
+                <h2 style={{ marginBottom: 4, color: '#0F172A', fontSize: '1.5rem', fontWeight: 800 }}>Student Dashboard</h2>
+                <p style={{ margin: 0, fontSize: 14, color: '#64748B' }}>Track your placement journey and upcoming opportunities.</p>
             </div>
 
             {/* Stat Cards */}
             <div className="dashboard-stats">
                 {stats.map((c, i) => (
-                    <div key={i} className="glass-card stat-card">
+                    <div key={i} className="stat-card">
                         <div className="stat-icon" style={{ background: c.bg, color: c.color }}>{c.icon}</div>
                         <div className="stat-info">
-                            <div className="stat-value">{c.value}</div>
+                            <div className="stat-value" style={{ color: c.color }}>{c.value}</div>
                             <div className="stat-label">{c.label}</div>
                         </div>
                     </div>
@@ -66,7 +65,7 @@ const StudentDashboard = () => {
             <div className="glass-panel" style={{ borderRadius: 14, overflow: 'hidden' }}>
                 <div className="section-header">
                     <div>
-                        <h3>Test Scores</h3>
+                        <h3>📊 Test Scores</h3>
                         <p>{myResults.length} attempt{myResults.length !== 1 ? 's' : ''}</p>
                     </div>
                 </div>
@@ -75,29 +74,34 @@ const StudentDashboard = () => {
                         <div className="empty-state">
                             <div className="empty-state-icon">📊</div>
                             <p>No test attempts yet.</p>
-                            <span>Go to <strong style={{ color: '#818cf8', WebkitTextFillColor: '#818cf8' }}>Preparation</strong> to take MCQ quizzes or code.</span>
+                            <span>Go to <strong style={{ color: '#2563EB' }}>Preparation</strong> to take MCQ quizzes or code.</span>
                         </div>
                     ) : (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                             {[...myResults].reverse().map((r) => {
                                 const sc = scoreColor(r.pct);
                                 return (
-                                    <div key={r.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '10px 16px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', flexWrap: 'wrap' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
-                                            <div style={{ width: 34, height: 34, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                background: r.type === 'coding' ? 'rgba(16,185,129,0.15)' : 'rgba(99,102,241,0.15)' }}>
-                                                {r.type === 'coding' ? <Code2 size={16} style={{ color: '#34d399' }}/> : <BookOpen size={16} style={{ color: '#818cf8' }}/>}
+                                    <div key={r.id} className="score-row">
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                                            <div style={{
+                                                width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                background: r.type === 'coding' ? '#ECFDF5' : '#EFF6FF'
+                                            }}>
+                                                {r.type === 'coding'
+                                                    ? <Code2 size={17} style={{ color: '#10B981' }} />
+                                                    : <BookOpen size={17} style={{ color: '#2563EB' }} />}
                                             </div>
                                             <div style={{ minWidth: 0 }}>
-                                                <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-main)', WebkitTextFillColor: 'var(--text-main)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.title}</div>
-                                                <div style={{ fontSize: 11, color: 'var(--text-muted)', WebkitTextFillColor: 'var(--text-muted)', marginTop: 2 }}>
+                                                <div style={{ fontWeight: 600, fontSize: 14, color: '#0F172A', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.title}</div>
+                                                <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>
                                                     🏢 {r.companyName} · {new Date(r.date).toLocaleDateString()}{r.language && ` · ${r.language}`}
                                                 </div>
                                             </div>
                                         </div>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-                                            {r.type === 'mcq' && <span style={{ fontSize: 13, color: 'var(--text-muted)', WebkitTextFillColor: 'var(--text-muted)' }}>{r.score}/{r.total}</span>}
-                                            <span style={{ padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700, background: sc.bg, color: sc.color, WebkitTextFillColor: sc.color }}>
+                                            {r.type === 'mcq' && <span style={{ fontSize: 13, color: '#64748B' }}>{r.score}/{r.total}</span>}
+                                            <span style={{ padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700, background: sc.bg, color: sc.color, border: `1px solid ${sc.border}` }}>
                                                 {r.type === 'coding' ? '✓ Solved' : `${r.pct}%`}
                                             </span>
                                         </div>
@@ -119,13 +123,12 @@ const StudentDashboard = () => {
                         </div>
                     </div>
                     <div className="section-body">
-                        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                        <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
                             {badges.map((b, i) => (
-                                <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '14px 20px', borderRadius: 12, textAlign: 'center', minWidth: 110,
-                                    background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.25)' }}>
-                                    <div style={{ fontSize: 32 }}>{b.icon}</div>
-                                    <div style={{ fontWeight: 700, fontSize: 13, color: '#c7d2fe', WebkitTextFillColor: '#c7d2fe' }}>{b.label}</div>
-                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', WebkitTextFillColor: 'var(--text-muted)' }}>{b.sub}</div>
+                                <div key={i} className="badge-card">
+                                    <div className="badge-card-icon">{b.icon}</div>
+                                    <div className="badge-card-label">{b.label}</div>
+                                    <div className="badge-card-sub">{b.sub}</div>
                                 </div>
                             ))}
                         </div>
@@ -137,7 +140,7 @@ const StudentDashboard = () => {
             <div className="glass-panel" style={{ borderRadius: 14, overflow: 'hidden' }}>
                 <div className="section-header">
                     <div>
-                        <h3>Placement Tracker</h3>
+                        <h3>📋 Placement Tracker</h3>
                         <p>{myApps.length} application{myApps.length !== 1 ? 's' : ''} tracked</p>
                     </div>
                 </div>
@@ -146,7 +149,7 @@ const StudentDashboard = () => {
                         <div className="empty-state">
                             <div className="empty-state-icon">📋</div>
                             <p>You haven't applied to any companies yet.</p>
-                            <span>Go to <strong style={{ color: '#818cf8', WebkitTextFillColor: '#818cf8' }}>Companies</strong> to explore drives.</span>
+                            <span>Go to <strong style={{ color: '#2563EB' }}>Companies</strong> to explore drives.</span>
                         </div>
                     ) : (
                         myApps.map((app) => {
@@ -154,12 +157,12 @@ const StudentDashboard = () => {
                             const sc = statusColor(app.finalStatus);
                             return (
                                 <div key={app.id} className="tracker-item">
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 10 }}>
                                         <div style={{ minWidth: 0 }}>
-                                            <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-main)', WebkitTextFillColor: 'var(--text-main)' }}>{comp?.name || 'Company'}</div>
-                                            <div style={{ fontSize: 12, color: 'var(--text-muted)', WebkitTextFillColor: 'var(--text-muted)', marginTop: 2 }}>{comp?.role || '—'}</div>
+                                            <div style={{ fontWeight: 700, fontSize: 15, color: '#0F172A' }}>{comp?.name || 'Company'}</div>
+                                            <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>{comp?.role || '—'}</div>
                                         </div>
-                                        <span style={{ background: sc.bg, color: sc.color, WebkitTextFillColor: sc.color, padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 600, flexShrink: 0 }}>
+                                        <span style={{ background: sc.bg, color: sc.color, border: `1px solid ${sc.border}`, padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 600, flexShrink: 0 }}>
                                             {app.finalStatus}
                                         </span>
                                     </div>
@@ -167,7 +170,7 @@ const StudentDashboard = () => {
                                         {app.rounds.map((r, idx) => {
                                             const rs = statusColor(r.status);
                                             return (
-                                                <div key={idx} className="round-pill" style={{ background: rs.bg, color: rs.color, WebkitTextFillColor: rs.color }}>
+                                                <div key={idx} className="round-pill" style={{ background: rs.bg, color: rs.color, border: `1px solid ${rs.border}` }}>
                                                     <span>●</span> {r.name}
                                                 </div>
                                             );

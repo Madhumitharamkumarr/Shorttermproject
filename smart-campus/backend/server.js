@@ -9,6 +9,7 @@ const applicationRoutes = require('./routes/applicationRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const discussionRoutes = require('./routes/discussionRoutes');
 const mockTestRoutes = require('./routes/mockTestRoutes');
+const quizRoutes = require('./routes/quizRoutes');
 
 // Load env vars
 dotenv.config();
@@ -30,6 +31,7 @@ app.use('/api/applications', applicationRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/discussions', discussionRoutes);
 app.use('/api/mocktests', mockTestRoutes);
+app.use('/api/quiz', quizRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
