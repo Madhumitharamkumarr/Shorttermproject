@@ -202,3 +202,69 @@
   transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
 }
+
+/* ===== RESPONSIVE ===== */
+
+/* --- Tablet (≤ 768px) --- */
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 20px;
+  }
+
+  .profile-links {
+    gap: 8px;
+  }
+
+  .profile-links a {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+}
+
+/* --- Mobile (≤ 480px) --- */
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 14px;
+  }
+
+  /* Stack avatar + name vertically on small phones */
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .profile-avatar {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    font-size: 22px;
+  }
+
+  .profile-header h3 { font-size: 1.1rem; }
+
+  /* Save button full width */
+  .save-row {
+    justify-content: stretch;
+  }
+  .save-row .btn,
+  .save-row .btn-pdf {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Skill tags smaller */
+  .skill-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  /* Profile link buttons stack to full width */
+  .profile-links {
+    flex-direction: column;
+  }
+  .profile-links a {
+    width: 100%;
+    justify-content: center;
+  }
+}

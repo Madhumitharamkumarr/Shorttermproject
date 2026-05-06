@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { LayoutDashboard, Building2, BookOpen, MessageSquare, User, Bell, ClipboardList } from 'lucide-react';
+import {
+    LayoutDashboard, Building2, BookOpen, MessageSquare,
+    User, Bell, ClipboardList, X,
+} from 'lucide-react';
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
     const { user } = useContext(AuthContext);
     const role = user?.role || 'student';
 
@@ -32,15 +35,23 @@ const Sidebar = () => {
         : (user?.email?.[0] || 'U').toUpperCase();
 
     return (
-        <div className="sidebar">
+        <div className={`sidebar ${isOpen ? 'open' : ''}`} role="navigation" aria-label="Main navigation">
             {/* Brand */}
             <div className="sidebar-brand">
                 <div className="sidebar-brand-inner">
                     <div className="sidebar-brand-logo">🎓</div>
-                    <div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
                         <h2>PrepNPlace</h2>
                         <div className="sidebar-brand-tagline">Smart Placement Portal</div>
                     </div>
+                    {/* Close button — only visible on mobile */}
+                    <button
+                        className="sidebar-close-btn"
+                        onClick={onClose}
+                        aria-label="Close navigation"
+                    >
+                        <X size={18} />
+                    </button>
                 </div>
             </div>
 
@@ -48,8 +59,12 @@ const Sidebar = () => {
             <div className="sidebar-user">
                 <div className="sidebar-user-avatar">{initials}</div>
                 <div style={{ minWidth: 0, flex: 1 }}>
-                    <div className="sidebar-user-name">{user?.name || user?.email?.split('@')[0] || 'User'}</div>
-                    <div className="sidebar-user-role">{role === 'admin' ? '🛡️ Admin' : '🎓 Student'}</div>
+                    <div className="sidebar-user-name">
+                        {user?.name || user?.email?.split('@')[0] || 'User'}
+                    </div>
+                    <div className="sidebar-user-role">
+                        {role === 'admin' ? '🛡️ Admin' : '🎓 Student'}
+                    </div>
                 </div>
             </div>
 
@@ -61,6 +76,7 @@ const Sidebar = () => {
                     <NavLink
                         key={idx}
                         to={item.path}
+                        onClick={onClose}   /* auto-close on mobile after nav */
                         className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
                     >
                         <item.icon size={18} />

@@ -247,6 +247,22 @@ select.form-input option {
   overflow-x: hidden;
 }
 
+/* ===== MOBILE SIDEBAR OVERLAY ===== */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 199; /* one below sidebar (200), above everything else */
+  animation: overlayFadeIn 0.25s ease;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* ===== TYPOGRAPHY ===== */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
@@ -502,10 +518,113 @@ tr:hover td { background: var(--surface-alt); }
   margin-bottom: 24px;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===================================================================
+   RESPONSIVE SYSTEM
+   Breakpoints:
+     Mobile S  : 320px
+     Mobile L  : max-width 480px
+     Tablet    : max-width 768px
+     Desktop   : min-width 1025px
+=================================================================== */
+
+/* ---------- TABLET (≤ 768px) ---------- */
 @media (max-width: 768px) {
+  /* Show overlay on mobile */
+  .sidebar-overlay { display: block; }
+
+  /* Pull main content back to full width */
   .main-content { margin-left: 0; }
-  .page-content { padding: 20px; }
-  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-  .flex-between { flex-direction: column; align-items: flex-start; }
+
+  /* Comfortable page padding for tablet */
+  .page-content { padding: 20px 18px; }
+
+  /* Stats grid — 2 columns on tablet */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Allow flex rows to wrap */
+  .flex-between {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Section card body less padding */
+  .section-card-body { padding: 16px; }
+  .section-card-header { padding: 14px 16px; }
+
+  /* Dashboard header text */
+  .dashboard-header h2 { font-size: 1.35rem; }
+  .page-header h2       { font-size: 1.25rem; }
+
+  /* Tables must scroll horizontally — never overflow viewport */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure bare tables are also wrapped in scroll context */
+  table {
+    min-width: 500px;
+  }
+
+  /* Forum layout — single column */
+  .forum-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Desktop row becomes column again */
+  .desktop-row {
+    flex-direction: column;
+  }
+}
+
+/* ---------- MOBILE LARGE (≤ 480px) ---------- */
+@media (max-width: 480px) {
+  /* Tighter padding on phones */
+  .page-content { padding: 14px 12px; }
+
+  /* Single-column stats on small phones */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Scale down headings */
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.2rem; }
+  h3 { font-size: 1rem; }
+
+  /* Section card body compact */
+  .section-card-body   { padding: 12px; }
+  .section-card-header { padding: 12px 14px; }
+
+  /* Buttons — ensure they don't overflow */
+  .btn {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+
+  /* Reduce table cell padding */
+  th, td { padding: 10px 12px; }
+
+  /* Form grid collapses to single column */
+  .form-grid-2 { grid-template-columns: 1fr; }
+
+  /* Push save button to full width */
+  .save-row { justify-content: stretch; }
+  .save-row .btn { width: 100%; justify-content: center; }
+}
+
+/* ---------- MOBILE SMALL (≤ 360px) ---------- */
+@media (max-width: 360px) {
+  .page-content { padding: 10px 8px; }
+
+  .stats-grid { grid-template-columns: 1fr; }
+
+  h1 { font-size: 1.3rem; }
+  h2 { font-size: 1.1rem; }
+
+  .btn { font-size: 12px; padding: 8px 12px; }
+
+  th, td { padding: 8px 10px; font-size: 12px; }
 }
